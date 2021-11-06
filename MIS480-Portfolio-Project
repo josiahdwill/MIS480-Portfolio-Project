@@ -1,0 +1,39 @@
+/* Charity BI Solution */
+/*Variables 
+average_gift_amount
+avg_home_value
+avg_neighborhood_income
+damt
+donor
+female
+gift_time_lag
+hh_income
+homeowner
+largest_gift
+lifetime_gifts
+lifetime_promotions_received
+median_neighborhood_income	
+months_since_gift
+most_recent_gift
+n_children
+pct_low_income
+region1
+region2
+region3
+region4
+wealth_rating */
+
+/* Summary statistics for continuous variables */
+proc MEANS data=WORK.IMPORT;
+  var n_children hh_income avg_home_value median_neighborhood_income avg_neighborhood_income pct_low_income lifetime_promotions_received largest_gift lifetime_gifts most_recent_gift months_since_gift gift_time_lag average_gift_amount damt;   
+run;
+
+/* Frequency percentages for categorical variables */
+proc FREQ data=WORK.IMPORT;
+tables donor female homeowner region1 region2 region3 region4 wealth_rating;
+run;
+
+/* Multivariate logistic regression */
+proc LOGISTIC descending data=WORK.IMPORT plots=effect;
+model donor=lifetime_promotions_received hh_income avg_neighborhood_income;
+run;
